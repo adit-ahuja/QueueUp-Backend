@@ -1,0 +1,25 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 60
+      arrivalRate: 10
+      name: "Normal carnival traffic"
+    - duration: 30
+      arrivalRate: 50
+      name: "Peak carnival rush"
+
+scenarios:
+  - name: "Customer ordering flow"
+    flow:
+      - post:
+          url: "/api/auth/send-otp"
+          json:
+            phone: "9999999999"
+            name: "Test User"
+            role: "customer"
+      - get:
+          url: "/api/events"
+      - get:
+          url: "/api/stalls/event/5635ba4e-08ca-45b1-8a23-8e41a54efc1c"
+      - get:
+          url: "/api/stalls/7dab4dc7-3c46-47c2-bc85-4c676095d41f/menu"
